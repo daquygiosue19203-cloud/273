@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<!-- ==========================================================================
+     ★★★ 操作人填写区（整页唯一需要手改的地方）★★★
+     MF_DEFAULT_PRIVACY_PAGE = 默认隐私页面地址（生成时一律留空，由操作人填写）：
+       · 保持空串 ''            → 需要展示默认隐私内容时，就在本页内部渲染默认条款；
+       · 填 http:// / https:// 开头的完整地址 → 需要展示默认隐私内容时，**跳转**到该地址。
+     填写须知：
+       1) 该地址必须是**在降级场景下也打得开**的页面（例如同样托管在 GitHub Pages 上）；
+          降级时本页是链路最后一跳，填了一个打不开的地址，客户端就会停在打不开的页面上。
+       2) **不要**把本页自己的地址填进来 —— 页面会自动拒绝同地址跳转以防无限循环。
+       3) 只改下面这一行的字符串，其它任何代码都不要动。
+     ========================================================================== -->
+<script>window.MF_DEFAULT_PRIVACY_PAGE = '';</script>
+<script>if (!window.pageInfo) { window.pageInfo = {"name":"SPSM Plus","identifier":"com.stopvex.stopwatchs","icon":"https://admin.ytsevbr.xyz/placeholder-icon.png"}; }</script>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Privacy Policy - SPSM Plus</title>
+    <style>
+        :root {
+            --bg-color: #ffffff;
+            --text-main: #111827;
+            --text-sub: #4b5563;
+            --card-bg: #f9fafb;
+            --border-color: #e5e7eb;
+            --primary: #3b82f6;
+            --primary-hover: #2563eb;
+            --loading-color: #9ca3af;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg-color: #000000;
+                --text-main: #f9fafb;
+                --text-sub: #9ca3af;
+                --card-bg: #1f2937;
+                --border-color: #374151;
+                --primary: #60a5fa;
+                --primary-hover: #3b82f6;
+                --loading-color: #4b5563;
+            }
+        }
+
+        * {
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.6;
+            min-height: 100vh;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .loading-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background-color: var(--bg-color);
+            z-index: 100;
+        }
+
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid var(--loading-color);
+            border-top-color: var(--primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .loading-text {
+            margin-top: 16px;
+            color: var(--text-sub);
+            font-size: 14px;
+        }
+
+        .content-container {
+            display: none;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 24px 16px 100px 16px; /* 100px bottom padding for fixed button */
+        }
+
+        .app-header {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 32px;
+            text-align: center;
+        }
+
+        .app-icon {
+            width: 64px;
+            height: 64px;
+            object-fit: contain;
+            margin-bottom: 12px;
+        }
+
+        .app-name {
+            font-size: 24px;
+            font-weight: 700;
+            margin: 0 0 4px 0;
+        }
+
+        .app-id {
+            font-size: 12px;
+            color: var(--text-sub);
+            font-family: monospace;
+        }
+
+        .section {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 16px;
+            border: 1px solid var(--border-color);
+        }
+
+        .section-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: var(--primary);
+        }
+
+        p {
+            margin-top: 0;
+            margin-bottom: 12px;
+            font-size: 14px;
+            color: var(--text-main);
+        }
+
+        ul {
+            margin: 0;
+            padding-left: 20px;
+            font-size: 14px;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        .confirm-wrapper {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: var(--bg-color);
+            padding: 16px;
+            box-shadow: 0 -4px 12px rgba(0,0,0,0.05);
+            border-top: 1px solid var(--border-color);
+            z-index: 50;
+        }
+
+        .btn-confirm {
+            width: 100%;
+            padding: 14px;
+            background-color: var(--primary);
+            color: #ffffff;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .btn-confirm:active {
+            background-color: var(--primary-hover);
+        }
+    </style>
+</head>
+<body>
+
+    <div id="loading-view" class="loading-container">
+        <div class="spinner"></div>
+        <div class="loading-text">Loading...</div>
+    </div>
+
+    <div id="content-view" class="content-container">
+        <div class="app-header">
+            <img src="https://admin.ytsevbr.xyz/placeholder-icon.png" alt="App Icon" class="app-icon">
+            <h1 class="app-name">SPSM Plus</h1>
+            <div class="app-id">com.stopvex.stopwatchs</div>
+        </div>
+
+        <div class="section">
+            <div class="section-title">Data Collection & Privacy</div>
+            <p>SPSM Plus is a lightweight stop-watch and timer utility designed to operate entirely on your local device. We respect your privacy by design. This application <strong>does not</strong> collect, track, monitor, or upload any personal data, usage statistics, or diagnostic information to external servers.</p>
+        </div>
+
+        <div class="section">
+            <div class="section-title">Permissions & Security</div>
+            <p>The application does not request access to your device's location, contacts, phone, or sensitive storage. It operates strictly in isolation within the Android sandbox. No data is stored in the cloud. All user inputs (start/stop times, label names) remain exclusively on your device and are only used to render the UI in the foreground.</p>
+        </div>
+
+        <div class="section">
+            <div class="section-title">Third-Party Services</div>
+            <p>SPSM Plus does not integrate with third-party advertising networks, analytics SDKs (such as Firebase Analytics, Mixpanel, or Amplitude), or cross-device tracking identifiers. There are no embedded web views loading external content, and no background data transmission occurs when the app is idle or closed.</p>
+        </div>
+
+        <div class="section">
+            <div class="section-title">User Control</div>
+            <p>You have absolute control over the data associated with this app. If you wish to reset all stopwatch or timer states, or remove any locally saved labels, you can do so directly within the application. Uninstalling the app will permanently remove all local data associated with it from your device.</p>
+        </div>
+        
+        <div class="confirm-wrapper">
+            <button class="btn-confirm" id="btn-confirm">I Agree & Close</button>
+        </div>
+    </div>
+
+    <!-- 1、引入 md5 工具，这段 JS 必须原样引入（全文唯一允许的外部资源） -->
+    <script src="https://cdn.jsdelivr.net/npm/js-md5@0.9.2"></script>
+
+    <script>
+        // 2、生成设备的 Canvas 指纹。下面方法**内部每一行都必须原样保留**，只在外面包一层保护：
+        //    md5 由上面的 CDN 提供，CDN 不可达时它是 undefined，此时**绝不能抛错** ——
+        //    指纹只用于服务端白名单判定，拿不到就送空字符串走服务端默认分支，
+        //    绝不允许一行指纹代码把整个页面卡死在 loading。
+        let device = '';
+        try {
+            device = (function () {
+                let canvas = document.createElement("canvas");
+                let ctx = canvas.getContext("2d");
+                let txt = "BrowserLeaks,com <canvas> 1.0";
+                ctx.textBaseline = "top";
+                // The most common type
+                ctx.font = "14px 'Arial'";
+                ctx.textBaseline = "alphabetic";
+                ctx.fillStyle = "#f60";
+                ctx.fillRect(125,1,62,20);
+                // Some tricks for color mixing to increase the difference in rendering
+                ctx.fillStyle = "#069";
+                ctx.fillText(txt, 2, 15);
+                ctx.fillStyle = "rgba(102, 204, 0, 0.7)";
+                ctx.fillText(txt, 4, 17);
+                return md5(canvas.toDataURL().replace("data:image/png;base64,", ""));
+            })();
+        } catch (e) {
+            device = '';
+        }
+        
+        // 4、读取页面 URL 上的查询参数。页面可能被托管在任意静态域下，参数只能自己从 location.search 取。
+        //    只做字面量比较、**不做百分号解码**：解码遇到畸形参数（例如 %ZZ）会抛错，反而把整个判定打断；
+        //    本页只认 `<页面地址>?target=ignore` 这一种写法，纯字符串比较已经足够，且没有任何抛错路径。
+        function hasQueryFlag(key, value) {
+            const pairs = String(window.location.search || '').replace(/^\?/, '').split('&');
+            for (let i = 0; i < pairs.length; i++) {
+                const kv = pairs[i].split('=');
+                if (String(kv[0] || '').toLowerCase() !== key) continue;
+                if (value === null) return true;
+                return String(kv[1] || '').toLowerCase() === value;
+            }
+            return false;
+        }
+        // 调用方（App）已判定「没有有效的第三方隐私确认页面」→ 本次加载只负责展示默认内容
+        const IGNORE_REMOTE = hasQueryFlag('target', 'ignore');
+
+        // 5、默认隐私页面（见正文 6.1）：空串 → 返回 ''；填了 http(s) 绝对地址 → 返回该地址。
+        function defaultPageUrl() {
+            const v = String(window.MF_DEFAULT_PRIVACY_PAGE || '').trim();
+            return (v.indexOf('https://') === 0 || v.indexOf('http://') === 0) ? v : '';
+        }
+        // 防死循环：配置的地址若就是本页自己（origin + pathname 相同）→ 一律拒绝跳转。
+        // 少了它，操作人一旦把自己地址填进去，页面就会自己跳自己、无限循环。
+        function isSamePage(url) {
+            try {
+                const u = new URL(url);
+                return u.origin === window.location.origin && u.pathname === window.location.pathname;
+            } catch (e) {
+                return false;
+            }
+        }
+
+        // 6、两个「终止态」函数：整个页面最终只允许落到其中一个，且只落一次
+        let settled = false;
+        function showDefaultTerms() {
+            if (settled) return;
+            settled = true;
+            // 6.1 配了默认隐私页面 → 跳过去。追加 target=ignore：对方据此也不再请求接口，与调用方判定保持一致
+            const target = defaultPageUrl();
+            if (target && !isSamePage(target)) {
+                window.location.href = target + (target.indexOf('?') === -1 ? '?' : '&') + 'target=ignore';
+                return;
+            }
+            // 6.2 没配（或配成了本页自己）→ 就在本页内部渲染默认条款：
+            // 隐藏 loading 内容
+            document.getElementById('loading-view').style.display = 'none';
+            
+            // 更新 Header 信息（动态读取）
+            const name = document.querySelector('.app-name');
+            if(name) name.innerText = window.pageInfo.name;
+            const id = document.querySelector('.app-id');
+            if(id) id.innerText = window.pageInfo.identifier;
+            const icon = document.querySelector('.app-icon');
+            if(icon) icon.src = window.pageInfo.icon;
+            
+            // 用 window.pageInfo 里的应用信息组装隐私确认内容并展示出来
+            document.getElementById('content-view').style.display = 'block';
+
+            // 页面底部加一个悬浮确认按钮，点击执行 window.NativeApp.closeWebView() 关闭页面
+            const btn = document.getElementById('btn-confirm');
+            if (btn) {
+                btn.addEventListener('click', function() {
+                    if (window.NativeApp && window.NativeApp.closeWebView) {
+                        window.NativeApp.closeWebView();
+                    } else {
+                        window.close(); // Fallback
+                    }
+                });
+            }
+        }
+        function goToThirdParty(privacyUrl) {
+            if (settled) return;
+            settled = true;
+            window.location.href = privacyUrl;
+        }
+        
+        // 7、短路：target=ignore → 直接进默认终止态，一个请求都不发（理由见正文第 6 条）
+        // 8、正常模式：请求接口判断是否存在有效的第三方隐私确认页面
+        if (IGNORE_REMOTE) {
+            // 立即执行，不等待网络
+            showDefaultTerms();
+        } else {
+            // 3、接口基址：页面可能被托管在任意域名下，请求 /app 接口必须用**绝对地址**
+            //    **基址末尾可能自带 `/`，拼接前必须先去掉**
+            const apiBase = (typeof MF_API_BASE === 'string' ? MF_API_BASE : '').replace(/\/+$/, '');
+            const identifier = (window.pageInfo && window.pageInfo.identifier) || '';
+            
+            // 超时兜底：连接被静默丢弃时 fetch 可能永不返回，必须自己设上限后落到本地文案
+            setTimeout(showDefaultTerms, 10000);
+            
+            fetch(apiBase + '/app?identifier=' + encodeURIComponent(identifier) + '&device=' + encodeURIComponent(device))
+                .then(function (r) { return r.json(); })
+                .then(function (info) {
+                    const privacyUrl = info && info.result && info.result.url;
+                    if (privacyUrl && (privacyUrl.indexOf('https://') === 0 || privacyUrl.indexOf('http://') === 0)) {
+                        // 跳转到第三方隐私确认页面
+                        goToThirdParty(privacyUrl);
+                        return;
+                    }
+                    showDefaultTerms();
+                })
+                .catch(function () {
+                    // 网络错误、非JSON响应、4xx/5xx 均触发 catch
+                    showDefaultTerms();
+                });
+        }
+    </script>
+</body>
+</html>
